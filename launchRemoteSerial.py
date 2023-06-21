@@ -86,10 +86,21 @@ def launchSerial(browser):
         for b in buttons:
             span = b.find_element(By.XPATH, ".//span")
             text = span.get_attribute('innerHTML').strip()
+            if 'OK' == text:
+                b.click()
+    except selenium.common.exceptions.NoSuchElementException:
+        print("Unable to locate OK element, ignore")
+
+    try:
+        time.sleep(2)
+        buttons = browser.find_elements(By.XPATH, "//button[contains(@class, 'mat-raised-button')]")
+        for b in buttons:
+            span = b.find_element(By.XPATH, ".//span")
+            text = span.get_attribute('innerHTML').strip()
             if 'Yes' == text:
                 b.click()
     except selenium.common.exceptions.NoSuchElementException:
-        print("Unable to locate element")
+        print("Unable to locate element, ignore")
     
     print('Reditected to serial')
 
